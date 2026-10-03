@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bookworm
+FROM python:3.12-slim-bookworm
 
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
@@ -59,12 +59,6 @@ RUN python -m pip install --no-cache-dir --upgrade \
         pip \
         setuptools \
         wheel
-
-# Paksa gevent & greenlet dari wheel jadi (hindari kompilasi source yang
-# berat di mesin kecil dan rawan gagal kehabisan RAM).
-RUN pip install --no-cache-dir --only-binary :all: \
-        "gevent==22.10.2" \
-        "greenlet==2.0.2"
 
 RUN pip install --no-cache-dir -r requirements.txt
 

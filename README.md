@@ -1,6 +1,6 @@
 # Odoo 17 Docker Template
 
-Template deploy Odoo 17 (rakitan sendiri di atas `python:3.10-slim-bookworm`,
+Template deploy Odoo 17 (rakitan sendiri di atas `python:3.12-slim-bookworm`,
 source Odoo di-clone dari branch `17.0`) dengan library tambahan yang biasa
 dibutuhkan modul custom, siap dibakukan sekali dan dipakai berulang untuk
 setiap client.
