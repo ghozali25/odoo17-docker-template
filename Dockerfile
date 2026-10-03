@@ -60,6 +60,12 @@ RUN python -m pip install --no-cache-dir --upgrade \
         setuptools \
         wheel
 
+# Paksa gevent & greenlet dari wheel jadi (hindari kompilasi source yang
+# berat di mesin kecil dan rawan gagal kehabisan RAM).
+RUN pip install --no-cache-dir --only-binary :all: \
+        "gevent==22.10.2" \
+        "greenlet==2.0.2"
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # --- Library tambahan untuk modul-modul custom ---
