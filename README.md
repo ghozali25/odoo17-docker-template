@@ -42,6 +42,43 @@ Folder penting (semua di host, aman dari `docker compose up -d` berulang):
 | `addons/`          | Addons tambahan (extra)               |
 | `custom_addons/`   | Modul custom client                   |
 
+## Opsi: data di /mnt/storage
+
+Bila server punya mount storage besar (mis. `/mnt/storage`), dua cara
+supaya database & filestore tinggal di sana, bukan di disk sistem:
+
+**Cara 1 — clone langsung di storage (paling sederhana):**
+
+```bash
+cd /mnt/storage
+sudo git clone <repo-ini> odoo17
+cd odoo17
+```
+
+Sisa langkahnya sama seperti di atas; semua folder `data/`, `addons/`,
+`custom_addons/` otomatis berada di `/mnt/storage/odoo17/`.
+
+**Cara 2 — repo di tempat lain, volume diarahkan manual:**
+
+Edit `docker-compose.yml`, ubah volume menjadi path absolut:
+
+```yaml
+    volumes:
+      - /mnt/storage/odoo17/data/postgres:/var/lib/postgresql/data
+```
+
+dan untuk service `odoo`:
+
+```yaml
+    volumes:
+      - /mnt/storage/odoo17/data/odoo:/var/lib/odoo
+      - ./config:/etc/odoo
+      - /mnt/storage/odoo17/addons:/mnt/extra-addons
+      - /mnt/storage/odoo17/custom_addons:/mnt/custom-addons
+```
+
+Buat dulu foldernya: `sudo mkdir -p /mnt/storage/odoo17/{data/postgres,data/odoo,addons,custom_addons}`.
+
 ## Catatan
 
 - Jangan commit file `.env` asli; repo hanya menyimpan `.env.example`.
